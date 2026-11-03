@@ -85,7 +85,7 @@ function lazyScene(id, loader, onP){
 const g = { speed:$('[data-gauge="speed"]'), units:$('[data-gauge="units"]'), reg:$('[data-gauge="reg"]') };
 lazyScene('flexo', () => import('./flexo.js?v=11').then(m => m.createFlexo($('#flexo-gl'))), p => {
   steps('#flexo', p);
-  g.units.textContent = `${Math.min(8, Math.round(p*10))}/8`;
+  setText(g.units, `${Math.min(8, Math.round(p*10))}/8`);
 });
 steps('#flexo', 0); steps('#offset', 0);
 const legend = $$('.cmyk-legend span');
@@ -307,6 +307,21 @@ $('#print-btn').addEventListener('click', e => {
 });
 $('#contact').addEventListener('pointerdown', e => { if(e.target.closest('button,a')) return; const r = sc.getBoundingClientRect(); splash(e.clientX-r.left, e.clientY-r.top); });
 
+/* ---------- jauges : valeurs lissées, écrites ~8 fois/s ---------- */
+const setText = (el, t) => { if(el.textContent !== t) el.textContent = t; };
+const gs = { speed:320, reg:.015, regT:.015, regNext:0, write:0 };
+function updateGauges(dt, boost){
+  gs.speed += (320 + boost*120 - gs.speed) * Math.min(1, dt*3);
+  gs.regNext -= dt;
+  if(gs.regNext <= 0){ gs.regT = .01 + Math.random()*.02 + Math.min(.04, mis*.003); gs.regNext = .9; }
+  gs.reg += (gs.regT - gs.reg) * Math.min(1, dt*2.5);
+  gs.write -= dt;
+  if(gs.write > 0) return;
+  gs.write = .125;
+  setText(g.speed, String(Math.round(gs.speed/5)*5).padStart(3,'0'));
+  setText(g.reg, `±${gs.reg.toFixed(2)}`);
+}
+
 /* ---------- boucle principale ---------- */
 let last = performance.now();
 gsap.ticker.add(() => {
@@ -318,8 +333,7 @@ gsap.ticker.add(() => {
   if(hero){ hero.st.mis = mis*.7; hero.frame(dt); }
   if(loupe) loupe.frame(dt);
   if(scenes.flexo){ scenes.flexo.st.boost = Math.min(2.5, Math.abs(v)*.06); scenes.flexo.frame(dt);
-    g.speed.textContent = String(Math.round(320 + scenes.flexo.st.boost*120)).padStart(3,'0');
-    g.reg.textContent = `±${(.01 + Math.random()*.02 + mis*.004).toFixed(2)}`; }
+    updateGauges(dt, scenes.flexo.st.boost); }
   if(scenes.offset) scenes.offset.frame(dt);
   cx += (tx-cx)*.22; cy += (ty-cy)*.22; cur.style.transform = `translate(${cx}px,${cy}px)`;
   drawSplash();
