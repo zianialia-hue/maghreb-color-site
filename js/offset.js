@@ -1,7 +1,7 @@
 // Presse offset feuille à feuille, 4 groupes CMJN. Chaque feuille se construit couche par couche.
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { drawPoster } from './art.js?v=8';
+import { drawPoster } from './art.js?v=11';
 
 const UNITS = [-4.5, -1.5, 1.5, 4.5];
 const INKS = ['#00aeef','#ec008c','#ffe600','#1a1a1a'];
@@ -138,6 +138,7 @@ export function createOffset(canvas){
     st.layers = UNITS.filter(u => maxX > u).length;
     const t = Math.min(.999, Math.max(0, st.sp));
     cc.getPointAt(t, camera.position); lc.getPointAt(t, look);
+    if(camera.aspect < 1){ const k = 1 + (1-camera.aspect)*.55; camera.position.sub(look).multiplyScalar(k).add(look); }
     camera.position.x += st.mouse[0]*1; camera.position.y -= st.mouse[1]*.6;
     camera.lookAt(look);
     renderer.render(scene, camera);

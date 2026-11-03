@@ -1,5 +1,5 @@
-import { createHalftone } from './halftone.js?v=8';
-import { starSVG, plainStar, petalPath, drawPoster, drawStar, PETAL_INKS, BRAND } from './art.js?v=8';
+import { createHalftone } from './halftone.js?v=11';
+import { starSVG, plainStar, petalPath, drawPoster, drawStar, PETAL_INKS, BRAND } from './art.js?v=11';
 
 // Coordonnées de contact
 const CONFIG = {
@@ -83,13 +83,13 @@ function lazyScene(id, loader, onP){
   ScrollTrigger.create({ trigger:`#${id}`, start:'top top', end:'bottom bottom', onUpdate:s => { if(scenes[id]) scenes[id].st.progress = s.progress; onP(s.progress); } });
 }
 const g = { speed:$('[data-gauge="speed"]'), units:$('[data-gauge="units"]'), reg:$('[data-gauge="reg"]') };
-lazyScene('flexo', () => import('./flexo.js?v=8').then(m => m.createFlexo($('#flexo-gl'))), p => {
+lazyScene('flexo', () => import('./flexo.js?v=11').then(m => m.createFlexo($('#flexo-gl'))), p => {
   steps('#flexo', p);
   g.units.textContent = `${Math.min(8, Math.round(p*10))}/8`;
 });
 steps('#flexo', 0); steps('#offset', 0);
 const legend = $$('.cmyk-legend span');
-lazyScene('offset', () => import('./offset.js?v=8').then(m => m.createOffset($('#offset-gl'))), p => {
+lazyScene('offset', () => import('./offset.js?v=12').then(m => m.createOffset($('#offset-gl'))), p => {
   steps('#offset', p);
   const n = Math.min(4, Math.floor(p*6)); legend.forEach((l,i) => l.classList.toggle('on', i < n));
 });

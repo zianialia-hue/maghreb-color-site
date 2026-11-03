@@ -5,7 +5,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { PETAL_INKS } from './art.js?v=8';
+import { PETAL_INKS } from './art.js?v=11';
 
 const R = 3, W = 3.4, WEB_W = 2.9;
 const N = 8, SPAN = 34 * Math.PI/180;
@@ -267,6 +267,7 @@ export function createFlexo(canvas){
     const t = Math.min(.999, Math.max(0, st.sp));
     camCurve.getPointAt(t, camera.position);
     lookCurve.getPointAt(t, look);
+    if(camera.aspect < 1){ const k = 1 + (1-camera.aspect)*1.5; camera.position.sub(look).multiplyScalar(k).add(look); }
     camera.position.x += st.mouse[0]*1.2; camera.position.y -= st.mouse[1]*.8;
     camera.lookAt(look);
     composer.render(dt);

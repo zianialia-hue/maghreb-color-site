@@ -121,7 +121,7 @@ canvas{display:block}
 .cmyk-legend span.on{opacity:1}
 .cmyk-legend .c.on{background:var(--c);color:#000}.cmyk-legend .m.on{background:var(--m)}
 .cmyk-legend .y.on{background:var(--y);color:#000}.cmyk-legend .k.on{background:#000;border-color:#fff}
-@media (max-width:720px){.gauges{top:auto;bottom:clamp(270px,40vh,330px);grid-auto-flow:column;gap:18px}}
+@media (max-width:720px){.gauges{top:118px;left:16px;right:16px;grid-auto-flow:column;justify-content:space-between;gap:12px;text-align:left}.gauges b{font-size:22px}.cmyk-legend{top:116px;right:auto;left:16px}.cmyk-legend span{width:28px;height:28px}.step{padding:16px 18px}.step h3{font-size:22px}.step p{font-size:15px}}
 
 /* ---------- loupe ---------- */
 #loupe{background:var(--paper);color:var(--ink);padding:clamp(100px,16vh,180px) clamp(16px,4vw,60px)}
