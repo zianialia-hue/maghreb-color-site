@@ -58,7 +58,7 @@ document.addEventListener('pointerover', e => {
 });
 
 /* ---------- hero : encre tramée ---------- */
-const hero = createHalftone($('#hero-gl'), { mode:'ink', cell:4.2, zoom:7, loupeR:120, host:$('#hero'), dpr:1.25 });
+const hero = null; // intro statique (plus d'encre animée)
 
 /* ---------- manifeste ---------- */
 const man = $('.manifesto');
@@ -378,8 +378,8 @@ tl.to(prog, { p:1, duration:reduce ? .3 : 2.1, ease:'power2.inOut', onUpdate:() 
 tl.call(() => { $('.ld-meta span').textContent = 'BON À TIRER ✓'; });
 tl.to('.ld-star', { scale:1.12, duration:.25, ease:'power2.out' });
 tl.to(ld, { clipPath:'inset(0 0 100% 0)', duration:1, ease:'expo.inOut' }, '+=.2');
-tl.from('.mega', { yPercent:110, opacity:0, stagger:.1, duration:1.1, ease:'expo.out' }, '-=.55');
-tl.from('.hero-inner .kicker, .hero-sub, .arab, .hero-hint', { opacity:0, y:20, stagger:.08, duration:.8 }, '-=.8');
+tl.from('.mega', { y:24, opacity:0, duration:.9, ease:'power3.out' }, '-=.55');
+tl.from('.hero-inner .kicker, .hero-sub, .hero-ctas, .hero-star, .hero-arab', { opacity:0, y:16, stagger:.06, duration:.7 }, '-=.8');
 tl.call(() => { ld.remove(); document.body.classList.remove('loading'); lenis?.start(); ScrollTrigger.refresh(); });
 
 /* ---------- apparitions ---------- */
