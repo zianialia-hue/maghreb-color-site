@@ -211,3 +211,24 @@ footer{position:relative;display:flex;justify-content:space-between;gap:16px;fle
 
 @media (prefers-reduced-motion:reduce){.mq-inner,.brand-star svg,.foot-star svg{animation:none}}
 .hero-inner .kicker{display:inline-block;background:rgba(242,238,229,.78);padding:4px 8px;opacity:1}
+
+/* ---------- formulaire de devis ---------- */
+.quote{display:grid;gap:16px;max-width:760px;max-height:0;overflow:hidden;opacity:0;transform:translateY(-10px);transition:max-height .7s cubic-bezier(.2,.8,.2,1),opacity .5s,transform .5s,margin .5s;margin-top:0}
+.quote.open{max-height:900px;opacity:1;transform:none;margin-top:34px}
+.quote .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.q-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.quote label{display:grid;gap:8px}
+.quote small{opacity:.55}
+.quote input,.quote select,.quote textarea{font:inherit;font-size:16px;color:var(--paper);background:rgba(242,238,229,.06);border:1px solid var(--line);border-radius:10px;padding:13px 14px;outline:none;transition:border-color .2s,background .2s}
+.quote select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--paper) 50%),linear-gradient(135deg,var(--paper) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.quote select option{color:#111}
+.quote textarea{resize:vertical;min-height:110px}
+.quote input:focus,.quote select:focus,.quote textarea:focus{border-color:var(--blue);background:rgba(99,160,215,.08)}
+.quote .bad{border-color:#e0567a}
+.q-foot{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.q-send{background:var(--paper);color:var(--ink);padding:15px 26px}
+.q-send:disabled{opacity:.6}
+.q-status{font-size:15px;max-width:460px}
+.q-status.ok{color:#8fd07a}.q-status.err{color:#f08aa5}
+.q-status a{text-decoration:underline}
+@media (max-width:720px){.q-row{grid-template-columns:1fr}}

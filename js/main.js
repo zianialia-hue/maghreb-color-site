@@ -301,11 +301,35 @@ function drawSplash(){
   blobs = blobs.filter(b => b.life > 0);
   if(!blobs.length) sx.clearRect(0,0,sc.width,sc.height);
 }
+/* ---------- formulaire de devis (contact.php sur Hostinger) ---------- */
+const qf = $('#quote-form'), qStatus = $('.q-status'), qSend = $('.q-send');
 $('#print-btn').addEventListener('click', e => {
   const r = sc.getBoundingClientRect(); splash(e.clientX-r.left, e.clientY-r.top);
-  setTimeout(() => location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent('Demande de devis — impression')}`, 900);
+  qf.classList.add('open');
+  setTimeout(() => { lenis ? lenis.scrollTo(qf, { offset:-140, duration:1.1 }) : qf.scrollIntoView({ behavior:'smooth', block:'center' }); }, 120);
+  setTimeout(() => qf.querySelector('input[name="name"]').focus({ preventScroll:true }), 450);
 });
-$('#contact').addEventListener('pointerdown', e => { if(e.target.closest('button,a')) return; const r = sc.getBoundingClientRect(); splash(e.clientX-r.left, e.clientY-r.top); });
+const qMsg = (txt, ok) => { qStatus.innerHTML = txt; qStatus.className = 'q-status ' + (ok ? 'ok' : 'err'); };
+const qFallback = `Envoi impossible pour le moment. Écrivez-nous à <a href="mailto:${CONFIG.email}">${CONFIG.email}</a> ou appelez le <a href="tel:${CONFIG.phone.replace(/\s/g,'')}">${CONFIG.phone}</a>.`;
+qf.addEventListener('submit', async e => {
+  e.preventDefault();
+  const name = qf.elements.name.value.trim(), phone = qf.elements.phone.value.trim();
+  qf.querySelectorAll('[required]').forEach(i => i.classList.toggle('bad', !i.value.trim()));
+  if(!name || !phone){ qMsg('Merci d’indiquer votre nom et votre téléphone.', false); return; }
+  qSend.disabled = true; const label = qSend.textContent; qSend.textContent = 'Envoi…'; qMsg('', true);
+  try {
+    const res = await fetch('contact.php', { method:'POST', body:new FormData(qf), headers:{ 'X-Requested-With':'XMLHttpRequest' } });
+    const data = await res.json().catch(() => ({ ok:false }));
+    if(data.ok){
+      qMsg('Merci ! Votre demande est bien partie. Nous vous recontactons très vite.', true);
+      qf.reset();
+      const b = qSend.getBoundingClientRect(), r = sc.getBoundingClientRect();
+      splash(b.left + b.width/2 - r.left, b.top + b.height/2 - r.top);
+    } else qMsg(qFallback, false);
+  } catch { qMsg(qFallback, false); }
+  qSend.disabled = false; qSend.textContent = label;
+});
+$('#contact').addEventListener('pointerdown', e => { if(e.target.closest('button,a,form')) return; const r = sc.getBoundingClientRect(); splash(e.clientX-r.left, e.clientY-r.top); });
 
 /* ---------- jauges : valeurs lissées, écrites ~8 fois/s ---------- */
 const setText = (el, t) => { if(el.textContent !== t) el.textContent = t; };
