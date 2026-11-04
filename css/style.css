@@ -86,7 +86,7 @@ canvas{display:block}
 .crop.br{bottom:24px;right:16px}.crop.br::before{bottom:12px;right:0}.crop.br::after{right:12px;bottom:0}
 @media (max-width:860px){
   #hero{align-items:flex-end}
-  .hero-star{top:96px;right:-18vw;transform:none;width:78vw;opacity:.9}
+  .hero-star{top:84px;right:-14vw;transform:none;width:62vw;opacity:.9}
   .hero-inner{padding-top:64vw}
   .hero-arab{display:none}
 }
