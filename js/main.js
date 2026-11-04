@@ -304,7 +304,6 @@ function drawSplash(){
 /* ---------- formulaire de devis (contact.php sur Hostinger) ---------- */
 const qf = $('#quote-form'), qStatus = $('.q-status'), qSend = $('.q-send');
 $('#print-btn').addEventListener('click', e => {
-  const r = sc.getBoundingClientRect(); splash(e.clientX-r.left, e.clientY-r.top);
   qf.classList.add('open');
   setTimeout(() => { lenis ? lenis.scrollTo(qf, { offset:-140, duration:1.1 }) : qf.scrollIntoView({ behavior:'smooth', block:'center' }); }, 120);
   setTimeout(() => qf.querySelector('input[name="name"]').focus({ preventScroll:true }), 450);
@@ -326,13 +325,10 @@ qf.addEventListener('submit', async e => {
     if(data.ok){
       qMsg('Merci ! Votre demande est bien partie. Nous vous recontactons très vite.', true);
       qf.reset();
-      const b = qSend.getBoundingClientRect(), r = sc.getBoundingClientRect();
-      splash(b.left + b.width/2 - r.left, b.top + b.height/2 - r.top);
     } else qMsg(qFallback, false);
   } catch { qMsg(qFallback, false); }
   qSend.disabled = false; qSend.textContent = label;
 });
-$('#contact').addEventListener('pointerdown', e => { if(e.target.closest('button,a,form')) return; const r = sc.getBoundingClientRect(); splash(e.clientX-r.left, e.clientY-r.top); });
 
 /* ---------- jauges : valeurs lissées, écrites ~8 fois/s ---------- */
 const setText = (el, t) => { if(el.textContent !== t) el.textContent = t; };
