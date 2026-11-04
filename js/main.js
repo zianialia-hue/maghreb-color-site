@@ -316,6 +316,9 @@ qf.addEventListener('submit', async e => {
   const name = qf.elements.name.value.trim(), phone = qf.elements.phone.value.trim();
   qf.querySelectorAll('[required]').forEach(i => i.classList.toggle('bad', !i.value.trim()));
   if(!name || !phone){ qMsg('Merci d’indiquer votre nom et votre téléphone.', false); return; }
+  const em = qf.elements.email; const emOk = !em.value.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim());
+  em.classList.toggle('bad', !emOk);
+  if(!emOk){ qMsg('Cette adresse e-mail ne semble pas valide.', false); return; }
   qSend.disabled = true; const label = qSend.textContent; qSend.textContent = 'Envoi…'; qMsg('', true);
   try {
     const res = await fetch('contact.php', { method:'POST', body:new FormData(qf), headers:{ 'X-Requested-With':'XMLHttpRequest' } });

@@ -214,7 +214,7 @@ footer{position:relative;display:flex;justify-content:space-between;gap:16px;fle
 
 /* ---------- formulaire de devis ---------- */
 .quote{display:grid;gap:16px;max-width:760px;max-height:0;overflow:hidden;opacity:0;transform:translateY(-10px);transition:max-height .7s cubic-bezier(.2,.8,.2,1),opacity .5s,transform .5s,margin .5s;margin-top:0}
-.quote.open{max-height:900px;opacity:1;transform:none;margin-top:34px}
+.quote.open{max-height:1600px;opacity:1;transform:none;margin-top:34px}
 .quote .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .q-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .quote label{display:grid;gap:8px}
@@ -232,3 +232,4 @@ footer{position:relative;display:flex;justify-content:space-between;gap:16px;fle
 .q-status.ok{color:#8fd07a}.q-status.err{color:#f08aa5}
 .q-status a{text-decoration:underline}
 @media (max-width:720px){.q-row{grid-template-columns:1fr}}
+.quote .opt{font-style:normal;text-transform:none;letter-spacing:0;opacity:.8}
