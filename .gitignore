@@ -1,2 +1,4 @@
 dev-server.py
 .DS_Store
+upload/
+backup-ancien-site/
